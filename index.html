@@ -145,8 +145,8 @@
             noBtn.style.left = x + "px";
             noBtn.style.top = y + "px";
 
-            if (moveCount > 2) noBtn.innerText = "No? Really? 😏";
-            if (moveCount > 4) noBtn.innerText = "Think again 😜";
+            if (moveCount > 2) noBtn.innerText = "Plzzzzzzzzzz 🥺";
+            if (moveCount > 4) noBtn.innerText = "Ummmmmmm 😜";
             if (moveCount > 6) noBtn.innerText = "You can't escape 😆";
         });
 
@@ -169,7 +169,7 @@
     <div style="text-align:center;">
       <h1>Yayyy!! 🎉</h1>
       <p style="font-size:1.5rem;">Let's go for coffee ☕❤️</p>
-      <h2 id="count">Opening chat in 10...</h2>
+      <h2 id="count">Opening chat in 5...</h2>
     </div>
   `;
 
@@ -197,7 +197,7 @@
 
         /* ⏳ countdown + whatsapp */
         function startCountdown() {
-            let time = 10;
+            let time = 5;
             const countEl = document.getElementById("count");
 
             const interval = setInterval(() => {
@@ -208,9 +208,9 @@
                     clearInterval(interval);
 
                     const phone = "918002242330"; // change this
-                    const message = encodeURIComponent("Hey! You said YES 😍 Let's go for coffee ☕❤️");
+                    const message = encodeURIComponent("Okay!😍 Let's plan ☕❤️");
 
-                    window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
+                    window.location.href = `https://wa.me/${phone}?text=${message}`;
                 }
             }, 1000);
         }
