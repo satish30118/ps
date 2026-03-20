@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Coffee Date ☕</title>
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ffd6e0, #fff1f5);
+            font-family: 'Segoe UI', sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            z-index: 2;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 40px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            margin: 10px;
+            transition: 0.3s ease;
+        }
+
+        #yes {
+            background: #ff4d6d;
+            color: white;
+        }
+
+        #yes:hover {
+            transform: scale(1.1);
+        }
+
+        #no {
+            background: #ccc;
+            position: absolute;
+            transition: all 0.4s ease;
+        }
+
+        /* 💖 Floating hearts (home) */
+        .heart {
+            position: absolute;
+            color: #ff4d6d;
+            animation: float 6s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            from {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(-10vh);
+                opacity: 1;
+            }
+        }
+
+        /* 🌸 Falling (after YES) */
+        .fall {
+            position: fixed;
+            top: -20px;
+            animation: fall 5s linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh);
+            }
+        }
+
+        /* 🎵 music button */
+        .music-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 50%;
+            padding: 10px 12px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container" id="main">
+        <h1>Will you go for coffee with me? ☕❤️</h1>
+
+        <button id="yes">YES 😍</button>
+        <button id="no">NO 😢</button>
+    </div>
+
+    <!-- 🎵 MUSIC BUTTON -->
+    <div class="music-btn" onclick="toggleMusic()">🎵</div>
+
+    <audio id="music" autoplay loop>
+        <source src="music.mp3" type="audio/mp3">
+    </audio>
+
+    <script>
+        const noBtn = document.getElementById("no");
+        let moveCount = 0;
+
+        /* 🎵 autoplay after first click */
+        document.addEventListener("click", () => {
+            const music = document.getElementById("music");
+            music.volume = 0.3;
+            music.play();
+        }, { once: true });
+
+        /* 😈 NO button */
+        noBtn.addEventListener("mouseover", () => {
+            moveCount++;
+
+            const btnWidth = noBtn.offsetWidth;
+            const btnHeight = noBtn.offsetHeight;
+
+            const maxX = window.innerWidth - btnWidth;
+            const maxY = window.innerHeight - btnHeight;
+
+            const x = Math.random() * maxX;
+            const y = Math.random() * maxY;
+
+            noBtn.style.position = "fixed";
+            noBtn.style.left = x + "px";
+            noBtn.style.top = y + "px";
+
+            if (moveCount > 2) noBtn.innerText = "No? Really? 😏";
+            if (moveCount > 4) noBtn.innerText = "Think again 😜";
+            if (moveCount > 6) noBtn.innerText = "You can't escape 😆";
+        });
+
+        /* 💖 HOME HEARTS */
+        setInterval(() => {
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.innerHTML = "❤️";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.fontSize = (15 + Math.random() * 20) + "px";
+            document.body.appendChild(heart);
+
+            setTimeout(() => heart.remove(), 7000);
+        }, 400);
+
+        /* 🎉 YES click */
+        document.getElementById("yes").addEventListener("click", () => {
+
+            document.getElementById('main').innerHTML = `
+    <div style="text-align:center;">
+      <h1>Yayyy!! 🎉</h1>
+      <p style="font-size:1.5rem;">Let's go for coffee ☕❤️</p>
+      <h2 id="count">Opening chat in 10...</h2>
+    </div>
+  `;
+
+            startFalling();
+            startCountdown();
+        });
+
+        /* 🌸 falling animation */
+        function startFalling() {
+            setInterval(() => {
+                const el = document.createElement("div");
+                el.classList.add("fall");
+
+                const items = ["🌸", "💖", "🌹"];
+                el.innerHTML = items[Math.floor(Math.random() * items.length)];
+
+                el.style.left = Math.random() * 100 + "vw";
+                el.style.fontSize = (15 + Math.random() * 20) + "px";
+
+                document.body.appendChild(el);
+
+                setTimeout(() => el.remove(), 5000);
+            }, 200);
+        }
+
+        /* ⏳ countdown + whatsapp */
+        function startCountdown() {
+            let time = 10;
+            const countEl = document.getElementById("count");
+
+            const interval = setInterval(() => {
+                time--;
+                countEl.innerText = "Opening chat in " + time + "...";
+
+                if (time === 0) {
+                    clearInterval(interval);
+
+                    const phone = "918002242330"; // change this
+                    const message = encodeURIComponent("Hey! You said YES 😍 Let's go for coffee ☕❤️");
+
+                    window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
+                }
+            }, 1000);
+        }
+
+        /* 🎵 toggle */
+        function toggleMusic() {
+            const music = document.getElementById("music");
+            music.paused ? music.play() : music.pause();
+        }
+    </script>
+
+</body>
+
+</html>
