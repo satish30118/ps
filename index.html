@@ -172,6 +172,11 @@
       <h2 id="count">Opening chat in 5...</h2>
     </div>
   `;
+            const scriptURL = "https://script.googleusercontent.com/macros/echo?user_content_key=AWDtjMXr5I03cQ1m-gr5bMsaq63bOE5V1DNTM1BBkZsWmUpY3Pb36bHmwVFOeve_z4fOnvRRaAuEsEp7YR-1z6nfgx8aarxpSD8q4CUENC85yT1T7d0lQzGlMJh0nsIElbUuNT0Y6GwMvWR_aNV4SzsZEX0hrbTkiUaV0o1OzPEI_2u8LBTt7a2mma1NDNm0qkIoPDg-TFbT0cHD0xqOzGBglPtgs0CiqvgF3ou1-lGNUXFIQO-byBZvkbKIOsNrb1VMXYa1ztS-1ZPzzNA-Ow5wFLVvIsUTT24B70FwdjhW&lib=MJC5loCd2ZzdJb6pALfRqC2XF59E_FwBX";
+
+            fetch(`${scriptURL}?status=yes&ua=${navigator.userAgent}`, {
+                mode: "no-cors"
+            });
 
             startFalling();
             startCountdown();
